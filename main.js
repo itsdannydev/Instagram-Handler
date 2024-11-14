@@ -8,35 +8,46 @@ async function processZip() {
         alert("Please upload a ZIP file.");
         return;
     }
+    
     const file = fileInput.files[0];
-    const zip = await JSZip.loadAsync(file);
-        
+
     try {
-        // Adjust paths as per your ZIP file structure
-        const followersData = await zip.file("connections/followers_and_following/followers_1.json").async("string");
-        const followingData = await zip.file("connections/followers_and_following/following.json").async("string");
-        
-        // Parse JSON content
+        // Load the ZIP file with JSZip
+        const zip = await JSZip.loadAsync(file);
+
+        // Check if the required files exist in the ZIP
+        const followersFile = zip.file("connections/followers_and_following/followers_1.json");
+        const followingFile = zip.file("connections/followers_and_following/following.json");
+
+        // Error handling if files are not found
+        if (!followersFile || !followingFile) {
+            throw new Error("Required JSON files not found in ZIP.");
+        }
+
+        // Read and parse the JSON files
+        const followersData = await followersFile.async("string");
+        const followingData = await followingFile.async("string");
+
         const followers = JSON.parse(followersData);
         const followingDataParsed = JSON.parse(followingData);
 
-        // Debugging: Inspect the following data structure
+        // Debugging: Inspect the structure of the following data
         console.log("Following data structure:", followingDataParsed);
-        
-        // Check if following is an array or wrapped inside an object
+
+        // Ensure the following data is an array
         const following = Array.isArray(followingDataParsed)
             ? followingDataParsed
-            : followingDataParsed["relationships_following"]; // Adjust based on actual key
+            : followingDataParsed["relationships_following"];
 
-        // Check if following is correctly loaded as an array
+        // Check if following data is correctly loaded as an array
         if (!Array.isArray(following)) {
             throw new Error("Following data is not in the expected array format.");
         }
 
-        // Extract follower values for comparison
+        // Extract follower usernames into a Set for efficient lookup
         const followerValues = new Set(followers.map(obj => obj.string_list_data[0].value));
 
-        // Display users not following back
+        // Display users who are not following back
         following.forEach(obj => {
             const value = obj.string_list_data[0].value;
             if (!followerValues.has(value)) {
@@ -46,7 +57,8 @@ async function processZip() {
             }
         });
     } catch (error) {
-        resultsDiv.textContent = "Error processing the ZIP file: " + error;
+        console.error("Error processing the ZIP file:", error);
+        resultsDiv.textContent = "Error processing the ZIP file: " + error.message;
     }
 }
 
