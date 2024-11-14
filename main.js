@@ -8,27 +8,24 @@ async function processZip() {
         alert("Please upload a ZIP file.");
         return;
     }
-    const file = fileInput.files[0];
-    const zip = await JSZip.loadAsync(file);
-        
+
     try {
-        // Adjust paths as per your ZIP file structure
+        const file = fileInput.files[0];
+        const zip = await JSZip.loadAsync(file);
+        
+        // Define paths for JSON files within the ZIP
         const followersData = await zip.file("connections/followers_and_following/followers_1.json").async("string");
         const followingData = await zip.file("connections/followers_and_following/following.json").async("string");
-        
+
         // Parse JSON content
         const followers = JSON.parse(followersData);
         const followingDataParsed = JSON.parse(followingData);
 
-        // Debugging: Inspect the following data structure
-        console.log("Following data structure:", followingDataParsed);
-        
-        // Check if following is an array or wrapped inside an object
+        // Determine following array structure
         const following = Array.isArray(followingDataParsed)
             ? followingDataParsed
-            : followingDataParsed["relationships_following"]; // Adjust based on actual key
+            : followingDataParsed["relationships_following"];
 
-        // Check if following is correctly loaded as an array
         if (!Array.isArray(following)) {
             throw new Error("Following data is not in the expected array format.");
         }
