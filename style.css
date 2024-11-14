@@ -1,0 +1,131 @@
+/* Reset some default styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* General body styling */
+body {
+    font-family: 'Arial', sans-serif; /* Professional font */
+    background: #f1f1f1; /* Light gray background */
+    color: #333; /* Dark text for contrast */
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* Main container for the page */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff; /* White background for the main content */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    border-radius: 8px; /* Rounded corners */
+}
+
+/* Header styling */
+header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+header h1 {
+    font-size: 36px;
+    color: #262626; /* Dark color for the header */
+    margin-bottom: 10px;
+}
+
+/* Input file styling */
+input[type="file"] {
+    display: none; /* Hide the default file input */
+}
+
+/* Custom file upload button */
+label[for="zipInput"] {
+    background: linear-gradient(45deg, #f58529, #d61f69); /* Instagram-inspired gradient */
+    color: white;
+    font-size: 16px;
+    padding: 15px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Hover effect on the file upload button */
+label[for="zipInput"]:hover {
+    transform: scale(1.05);
+}
+
+/* Results section */
+#results {
+    margin-top: 40px;
+    font-size: 18px;
+    color: #444; /* Lighter color for the text */
+}
+
+#results p {
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #f8f8f8; /* Light gray background for each result */
+    border-left: 5px solid #f58529; /* Instagram accent color */
+    border-radius: 5px;
+}
+
+#results p:nth-child(odd) {
+    background-color: #fafafa; /* Slightly different background for alternating items */
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 14px;
+    color: #888; /* Muted gray for footer text */
+}
+
+footer a {
+    color: #f58529; /* Instagram accent color */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    header h1 {
+        font-size: 28px;
+    }
+
+    label[for="zipInput"] {
+        padding: 12px 20px;
+        font-size: 14px;
+    }
+
+    #results p {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 24px;
+    }
+
+    label[for="zipInput"] {
+        padding: 10px 15px;
+        font-size: 12px;
+    }
+
+    #results p {
+        font-size: 14px;
+    }
+}

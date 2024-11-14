@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload ZIP File</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Upload Your ZIP File</h1>
+            <p>Choose a ZIP file to extract and process</p>
+        </header>
+        
+        <form id="fileForm">
+            <!-- Hidden file input -->
+            <input type="file" id="zipInput" accept=".zip" />
+            
+            <!-- Custom upload button -->
+            <label for="zipInput">Choose ZIP file</label>
+        </form>
+
+        <!-- Displaying the results -->
+        <div id="results"></div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Your Website. <a href="#">Privacy Policy</a></p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script> <!-- JSZip library -->
+    <script src="main.js"></script>
+</body>
+</html>
