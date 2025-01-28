@@ -20,18 +20,10 @@ async function processZip() {
         const followers = JSON.parse(followersData);
         const followingDataParsed = JSON.parse(followingData);
 
-        // Debugging: Inspect the following data structure
-        console.log("Following data structure:", followingDataParsed);
-
         // Check if following is an array or wrapped inside an object
         const following = Array.isArray(followingDataParsed)
             ? followingDataParsed
             : followingDataParsed["relationships_following"]; // Adjust based on actual key
-
-        // Check if following is correctly loaded as an array
-        if (!Array.isArray(following)) {
-            throw new Error("Following data is not in the expected array format.");
-        }
 
         // Extract follower values for comparison
         const followerValues = new Set(followers.map(obj => obj.string_list_data[0].value));
@@ -39,19 +31,34 @@ async function processZip() {
         // Display users not following back
         following.forEach(obj => {
             const value = obj.string_list_data[0].value;
+            const username = value;
+
             if (!followerValues.has(value)) {
-                // Create a link for the user
-                const listItem = document.createElement("p");
+                // Use a placeholder image for now
+                const profilePicUrl = `https://www.instagram.com/${username}/profile_picture/`; // Placeholder image
+                
+                const listItem = document.createElement("div");
+                listItem.classList.add("user-item");
 
-                // Create an anchor tag for the Instagram link
-                const userLink = document.createElement("a");
-                userLink.href = `https://www.instagram.com/${value}`;
-                userLink.target = "_blank"; // Open in a new tab
-                userLink.textContent = value; // Display the Instagram handle
+                const profilePic = document.createElement("img");
+                profilePic.src = profilePicUrl;  // Set the profile picture URL
+                profilePic.alt = `${username}'s profile picture`;
+                profilePic.classList.add("profile-pic");
 
-                // Append the link to the list item and then append to results
-                listItem.appendChild(userLink);
-                listItem.appendChild(document.createTextNode(" is not following you back."));
+                // Create the user name part as a hyperlink
+                const userName = document.createElement("a");
+                userName.href = `https://www.instagram.com/${username}/`;
+                userName.textContent = username; // Only the username is clickable
+
+                // Create the rest of the text
+                const followBackText = document.createElement("span");
+                followBackText.textContent = ' is not following you back.';
+
+                // Append the profile pic and name to the list item
+                listItem.appendChild(profilePic);
+                listItem.appendChild(userName);
+                listItem.appendChild(followBackText);
+
                 resultsDiv.appendChild(listItem);
             }
         });
@@ -62,3 +69,8 @@ async function processZip() {
 
 // Attach event listener to file input to trigger the processZip function
 document.getElementById("zipInput").addEventListener("change", processZip);
+
+document.getElementById("themeSwitcher").addEventListener("change", function () {
+    document.body.classList.toggle("light-mode");
+    document.body.classList.toggle("dark-mode");
+});
