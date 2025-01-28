@@ -38,10 +38,11 @@ body {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 40px 20px; /* Increased padding for better spacing */
     background-color: var(--bg2-white); /* Default white container background */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-    border-radius: 8px; /* Rounded corners */
+    border-radius: 10px; /* Slightly more rounded corners */
+    margin-top: 40px; /* Margin top for spacing */
 }
 
 /* Dark mode container background */
@@ -72,12 +73,13 @@ label[for="zipInput"] {
     color: white;
     font-size: 16px;
     padding: 15px 25px;
-    border-radius: 8px;
+    border-radius: 50px;
     cursor: pointer;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease-in-out;
+    display: inline-block;
+    margin-left:40px;
 }
-
 /* Hover effect on the file upload button */
 label[for="zipInput"]:hover {
     transform: scale(1.05);
@@ -87,23 +89,36 @@ label[for="zipInput"]:hover {
 #results {
     margin-top: 40px;
     font-size: 18px;
-    color: var(--text-dark); /* Lighter color for the text */
+    color: var(--text-dark); /* Default color for text */
 }
 
 /* Style for each result item */
 #results .user-item {
     display: flex;
     align-items: center;
-    margin: 10px 0;
-    padding: 10px;
+    margin: 15px 0; /* Increased margin for spacing */
+    padding: 15px;
     background-color: var(--bg2-white); /* Light gray background for each result */
     border-left: 5px solid var(--theme); /* Instagram accent color */
-    border-radius: 5px;
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
 }
 
 /* Alternating background color for results */
 #results .user-item:nth-child(odd) {
-    background-color: #fafafa; /* Slightly different background for alternating items */
+    background-color: #f9f9f9; /* Slightly different background for alternating items */
+}
+
+/* Dark mode result item styling */
+body.dark-mode #results .user-item {
+    background-color: var(--bg2-dark); /* Dark mode result background */
+    color: var(--text-dark); /* Dark mode text */
+}
+
+/* Light mode result item styling */
+body.light-mode #results .user-item {
+    color: var(--text-white); /* Ensure text is visible in light mode */
 }
 
 /* Profile picture style */
@@ -111,7 +126,7 @@ label[for="zipInput"]:hover {
     width: 40px;
     height: 40px;
     border-radius: 50%;  /* This makes the profile picture a circle */
-    margin-right: 10px;  /* Space between profile picture and name */
+    margin-right: 15px;  /* Space between profile picture and name */
 }
 
 /* Style the username link */
@@ -119,10 +134,16 @@ label[for="zipInput"]:hover {
     text-decoration: none;
     color: var(--text-dark);
     font-size: 16px;
+    font-weight: bold; /* Bold username for emphasis */
 }
 
 #results .user-item a:hover {
     color: #0078D4;  /* Blue color on hover */
+}
+
+/* Light mode link color */
+body.light-mode #results .user-item a {
+    color: var(--text-white); /* Change link color in light mode */
 }
 
 /* Footer */
@@ -146,7 +167,7 @@ footer a:hover {
 /* Media queries for responsiveness */
 @media (max-width: 768px) {
     .container {
-        padding: 15px;
+        padding: 25px 15px; /* Adjusted padding for mobile */
     }
 
     header h1 {
@@ -160,6 +181,7 @@ footer a:hover {
 
     #results .user-item {
         font-size: 16px;
+        padding: 12px;
     }
 }
 
@@ -175,14 +197,16 @@ footer a:hover {
 
     #results .user-item {
         font-size: 14px;
+        padding: 10px;
     }
 }
 
 /* Theme Toggle Container */
 .theme-toggle {
-    position: absolute;
-    top: 40px;
-    right: 40px;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999; /* Ensures toggle button stays on top */
 }
 
 /* Toggle Switch Styles */
@@ -258,6 +282,16 @@ input:checked + .slider:before {
 body.light-mode #results .user-item {
     background-color: var(--bg2-white); /* Light mode result background */
 }
+/* Hover effect on the username link in both light and dark mode */
+#results .user-item a:hover {
+    color: #0078D4;  /* Blue color on hover */
+}
+
+/* Light mode username link hover effect */
+body.light-mode #results .user-item a:hover {
+    color: #0078D4;  /* Ensure the hover color is applied in light mode */
+}
+
 
 /* Media Queries */
 @media (max-width: 768px) {
