@@ -1,15 +1,35 @@
-/* Reset some default styling */
+/* General Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Define color variables */
+:root {
+    --bg1-dark: #121212;  /* Dark mode main background */
+    --bg2-dark: #1e1e1e;  /* Dark mode container background */
+    --text-dark: #fff;     /* Dark mode text */
+    --bg1-white: #f1f1f1;  /* Light mode main background */
+    --bg2-white: #fff;     /* Light mode container background */
+    --text-white: #333;    /* Light mode text */
+    --theme: #025ad6;      /* Accent color for theme */
+}
+
+/* Light/Dark Mode Colors */
+body.light-mode {
+    background-color: var(--bg1-white);
+    color: var(--text-white);
+}
+
+body.dark-mode {
+    background-color: var(--bg1-dark);
+    color: var(--text-dark);
+}
+
 /* General body styling */
 body {
     font-family: 'Arial', sans-serif; /* Professional font */
-    background: #f1f1f1; /* Light gray background */
-    color: #333; /* Dark text for contrast */
     line-height: 1.6;
     padding: 20px;
 }
@@ -19,9 +39,14 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #fff; /* White background for the main content */
+    background-color: var(--bg2-white); /* Default white container background */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
     border-radius: 8px; /* Rounded corners */
+}
+
+/* Dark mode container background */
+body.dark-mode .container {
+    background-color: var(--bg2-dark); /* Dark mode container background */
 }
 
 /* Header styling */
@@ -32,7 +57,7 @@ header {
 
 header h1 {
     font-size: 36px;
-    color: #262626; /* Dark color for the header */
+    color: var(--text-white); /* Dark color for the header */
     margin-bottom: 10px;
 }
 
@@ -43,7 +68,7 @@ input[type="file"] {
 
 /* Custom file upload button */
 label[for="zipInput"] {
-    background: linear-gradient(45deg, #f58529, #d61f69); /* Instagram-inspired gradient */
+    background: linear-gradient(45deg, var(--theme), #ff00c8); /* Instagram-inspired gradient */
     color: white;
     font-size: 16px;
     padding: 15px 25px;
@@ -62,19 +87,42 @@ label[for="zipInput"]:hover {
 #results {
     margin-top: 40px;
     font-size: 18px;
-    color: #444; /* Lighter color for the text */
+    color: var(--text-dark); /* Lighter color for the text */
 }
 
-#results p {
-    padding: 10px;
+/* Style for each result item */
+#results .user-item {
+    display: flex;
+    align-items: center;
     margin: 10px 0;
-    background-color: #f8f8f8; /* Light gray background for each result */
-    border-left: 5px solid #f58529; /* Instagram accent color */
+    padding: 10px;
+    background-color: var(--bg2-white); /* Light gray background for each result */
+    border-left: 5px solid var(--theme); /* Instagram accent color */
     border-radius: 5px;
 }
 
-#results p:nth-child(odd) {
+/* Alternating background color for results */
+#results .user-item:nth-child(odd) {
     background-color: #fafafa; /* Slightly different background for alternating items */
+}
+
+/* Profile picture style */
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;  /* This makes the profile picture a circle */
+    margin-right: 10px;  /* Space between profile picture and name */
+}
+
+/* Style the username link */
+#results .user-item a {
+    text-decoration: none;
+    color: var(--text-dark);
+    font-size: 16px;
+}
+
+#results .user-item a:hover {
+    color: #0078D4;  /* Blue color on hover */
 }
 
 /* Footer */
@@ -86,7 +134,7 @@ footer {
 }
 
 footer a {
-    color: #f58529; /* Instagram accent color */
+    color: var(--theme); /* Instagram accent color */
     text-decoration: none;
     font-weight: bold;
 }
@@ -110,7 +158,7 @@ footer a:hover {
         font-size: 14px;
     }
 
-    #results p {
+    #results .user-item {
         font-size: 16px;
     }
 }
@@ -125,7 +173,95 @@ footer a:hover {
         font-size: 12px;
     }
 
-    #results p {
+    #results .user-item {
         font-size: 14px;
+    }
+}
+
+/* Theme Toggle Container */
+.theme-toggle {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+}
+
+/* Toggle Switch Styles */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 25px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #555;
+    transition: 0.4s;
+    border-radius: 25px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 17px;
+    width: 17px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--theme); /* Instagram Accent Color */
+}
+
+input:checked + .slider:before {
+    transform: translateX(25px);
+}
+
+/* Main Title Styling */
+.main-title {
+    font-size: 48px;
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--theme); /* Accent color */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* General container styles */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--bg2-white); /* Light mode container background */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 50px;
+}
+
+/* Results Section */
+#results .user-item {
+    background-color: var(--bg2-white);
+}
+
+body.light-mode #results .user-item {
+    background-color: var(--bg2-white); /* Light mode result background */
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .main-title {
+        font-size: 36px;
     }
 }
